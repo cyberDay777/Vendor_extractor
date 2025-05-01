@@ -1,0 +1,53 @@
+name: My Custom Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  my-job-name:
+    runs-on: ubuntu-latest
+   
+    steps:
+      - name: Cleanup Space
+        uses: rokibhasansagar/slimhub_actions@main
+
+      - name: Set up SSH keys
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa.pub
+          ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          sleep 60
+
+      - name: Clone repositories
+        run: |
+          git clone https://dumps.tadiphone.dev/dumps/xiaomi/chenfeng.git ~/holi 
+          git clone https://github.com/cyberDay777/device_xiaomi_chenfeng.git device/xiaomi/chenfeng
+          git clone https://github.com/LineageOS/android_tools_extract-utils.git tools/extract-utils
+          git clone https://github.com/LineageOS/android_prebuilts_extract-tools.git prebuilts/extract-tools
+
+      - name: Set up and run scripts
+        run: |
+          chmod u+x device/xiaomi/chenfeng/setup-makefiles.sh
+          chmod u+x device/xiaomi/chenfeng/extract-files.sh
+          cd device/xiaomi/chenfeng
+          ./setup-makefiles.sh
+          ./extract-files.sh ~/holi
+
+      - name: Initialize and push vendor/avalon
+        run: |
+          cd vendor/xiaomi/chenfeng
+          git init 
+          git add .
+          git commit -m "first commit"
+          git branch -M main 
+          git remote add origin git@github.com:cyberDay777/vendor_xiaomi_chenfeng.git
+          git push -u origin main
