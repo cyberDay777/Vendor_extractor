@@ -30,8 +30,8 @@ jobs:
 
       - name: Clone repositories
         run: |
-          git clone https://dumps.tadiphone.dev/dumps/xiaomi/chenfeng.git ~/holi 
-          git clone https://github.com/cyberDay777/device_xiaomi_peridot.git device/xiaomi/chenfeng
+          git clone https://dumps.tadiphone.dev/dumps/xiaomi/chenfeng.git -b missi-user-15-AQ3A.240912.001-OS2.0.2.0.VNJINXM-release-keys ~/holi 
+          git clone https://github.com/xiaomi-chenfieng-devs/device_xiaomi_chenfeng.git device/xiaomi/chenfeng
           git clone https://github.com/LineageOS/android_tools_extract-utils.git tools/extract-utils
           git clone https://github.com/LineageOS/android_prebuilts_extract-tools.git prebuilts/extract-tools
 
