@@ -31,7 +31,7 @@ jobs:
       - name: Clone repositories
         run: |
           git clone https://dumps.tadiphone.dev/dumps/xiaomi/chenfeng.git -b missi-user-15-AQ3A.240912.001-OS2.0.2.0.VNJINXM-release-keys ~/holi 
-          
+          cd ~/holi
           cd aosp-device-tree
           git init 
           git add .
