@@ -37,11 +37,8 @@ jobs:
 
       - name: Set up and run scripts
         run: |
-          chmod u+x device/xiaomi/chenfeng/setup-makefiles.sh
-          chmod u+x device/xiaomi/chenfeng/extract-files.sh
-          cd device/xiaomi/chenfeng
-          ./setup-makefiles.sh
-          ./extract-files.sh ~/holi
+          python device/xiaomi/chenfeng/setup-makefiles.py
+          python device/xiaomi/chenfeng/extract-files.py ~/holi
 
       - name: Initialize and push vendor/avalon
         run: |
@@ -50,5 +47,5 @@ jobs:
           git add .
           git commit -m "first commit"
           git branch -M main 
-          git remote add origin git@github.com:cyberDay777/vendor_xiaomi_chenfeng.git
+          git remote add origin git@github.com:xiaomi-chenfieng-devs/vendor.git
           git push -u origin main
