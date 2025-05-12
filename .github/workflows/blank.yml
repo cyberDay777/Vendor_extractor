@@ -37,8 +37,9 @@ jobs:
 
       - name: Set up and run scripts
         run: |
-          python device/xiaomi/chenfeng/setup-makefiles.py
-          python device/xiaomi/chenfeng/extract-files.py ~/holi
+          export PYTHONPATH=tools/extract-utils
+          python3 device/xiaomi/chenfeng/setup-makefiles.py
+          python3 device/xiaomi/chenfeng/extract-files.py ~/holi
 
       - name: Initialize and push vendor/avalon
         run: |
